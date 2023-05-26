@@ -1309,7 +1309,7 @@ where
 
     fn next(&mut self) -> Option<Self::Item> {
         self.iter
-            .ex_find_map(|(i, node)| node.weight.as_ref().map(move |w| (node_index(i), w)))
+            .find_map(|(i, node)| node.weight.as_ref().map(move |w| (node_index(i), w)))
     }
 
     fn size_hint(&self) -> (usize, Option<usize>) {
@@ -1506,8 +1506,8 @@ where
     type Item = EdgeReference<'a, E, Ix>;
 
     fn next(&mut self) -> Option<Self::Item> {
-        self.iter.ex_find_map(|(i, edge)| {
-            edge.weight.as_ref().map(move |weight| EdgeReference {
+        self.iter.find_map(|(i, edge)| {
+            edge.weight.as_ref().map(move |weight| Self::Item {
                 index: edge_index(i),
                 node: edge.node,
                 weight,
@@ -1522,7 +1522,7 @@ where
 {
     fn next_back(&mut self) -> Option<Self::Item> {
         self.iter.ex_rfind_map(|(i, edge)| {
-            edge.weight.as_ref().map(move |weight| EdgeReference {
+            edge.weight.as_ref().map(move |weight| Self::Item {
                 index: edge_index(i),
                 node: edge.node,
                 weight,
@@ -1605,7 +1605,7 @@ where
 {
     type Item = NodeIndex<Ix>;
 
-    fn next(&mut self) -> Option<NodeIndex<Ix>> {
+    fn next(&mut self) -> Option<Self::Item> {
         // First any outgoing edges
         match self.edges.get(self.next[0].index()) {
             None => {}
@@ -1713,7 +1713,7 @@ impl<'a, N, Ix: IndexType> Iterator for NodeIndices<'a, N, Ix> {
     type Item = NodeIndex<Ix>;
 
     fn next(&mut self) -> Option<Self::Item> {
-        self.iter.ex_find_map(|(i, node)| {
+        self.iter.find_map(|(i, node)| {
             if node.weight.is_some() {
                 Some(node_index(i))
             } else {
@@ -1749,7 +1749,7 @@ impl<'a, E, Ix: IndexType> Iterator for EdgeIndices<'a, E, Ix> {
     type Item = EdgeIndex<Ix>;
 
     fn next(&mut self) -> Option<Self::Item> {
-        self.iter.ex_find_map(|(i, node)| {
+        self.iter.find_map(|(i, node)| {
             if node.weight.is_some() {
                 Some(edge_index(i))
             } else {
