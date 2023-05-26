@@ -362,7 +362,7 @@ where
     where
         G: GraphRef + Visitable<NodeId = N, Map = VM>,
     {
-        Topo {
+        Self {
             ordered: graph.visit_map(),
             tovisit: vec![],
         }

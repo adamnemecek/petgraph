@@ -487,21 +487,21 @@ iterator_wrap! {
 impl (Iterator) for
 /// An iterator over the [`EdgeReference`] of all the edges of the graph.
 struct EdgeReferences<'a, E, Ix> where { Ix: IndexType }
-item: EdgeReference<'a, E, Ix>,
-iter: std::iter::FlatMap<
-    std::iter::Enumerate<
-        std::slice::Iter<'a, Row<E, Ix>>
+    item: EdgeReference<'a, E, Ix>,
+    iter: std::iter::FlatMap<
+        std::iter::Enumerate<
+            std::slice::Iter<'a, Row<E, Ix>>
+        >,
+        SomeIter<'a, E, Ix>,
+        fn(
+            (usize, &'a Vec<WSuc<E, Ix>>)
+        ) -> SomeIter<'a, E, Ix>,
     >,
-    SomeIter<'a, E, Ix>,
-    fn(
-        (usize, &'a Vec<WSuc<E, Ix>>)
-    ) -> SomeIter<'a, E, Ix>,
->,
 }
 
 impl<'a, E, Ix: IndexType> Clone for EdgeReferences<'a, E, Ix> {
     fn clone(&self) -> Self {
-        EdgeReferences {
+        Self {
             iter: self.iter.clone(),
         }
     }
@@ -537,8 +537,8 @@ impl (Iterator) for
 /// Iterator over the [`EdgeReference`] of the outgoing edges from a node.
 #[derive(Debug, Clone)]
 struct OutgoingEdgeReferences<'a, E, Ix> where { Ix: IndexType }
-item: EdgeReference<'a, E, Ix>,
-iter: SomeIter<'a, E, Ix>,
+    item: EdgeReference<'a, E, Ix>,
+    iter: SomeIter<'a, E, Ix>,
 }
 
 impl<'a, Ix: IndexType, E> visit::IntoEdges for &'a List<E, Ix> {

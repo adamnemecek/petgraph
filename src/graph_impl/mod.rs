@@ -456,7 +456,7 @@ impl<N, E> Graph<N, E, Directed> {
     /// This is a convenience method. Use `Graph::with_capacity` or `Graph::default` for
     /// a constructor that is generic in all the type parameters of `Graph`.
     pub fn new() -> Self {
-        Graph {
+        Self {
             nodes: vec![],
             edges: vec![],
             ty: PhantomData,
@@ -470,7 +470,7 @@ impl<N, E> Graph<N, E, Undirected> {
     /// This is a convenience method. Use `Graph::with_capacity` or `Graph::default` for
     /// a constructor that is generic in all the type parameters of `Graph`.
     pub fn new_undirected() -> Self {
-        Graph {
+        Self {
             nodes: vec![],
             edges: vec![],
             ty: PhantomData,
@@ -485,7 +485,7 @@ where
 {
     /// Create a new `Graph` with estimated capacity.
     pub fn with_capacity(nodes: usize, edges: usize) -> Self {
-        Graph {
+        Self {
             nodes: Vec::with_capacity(nodes),
             edges: Vec::with_capacity(edges),
             ty: PhantomData,
