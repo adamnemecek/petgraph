@@ -64,8 +64,8 @@ impl<B> Control<B> {
     /// Get the value in `Control::Break(_)`, if present.
     pub fn break_value(self) -> Option<B> {
         match self {
-            Control::Continue | Control::Prune => None,
-            Control::Break(b) => Some(b),
+            Self::Break(b) => Some(b),
+            _ => None,
         }
     }
 }
@@ -93,20 +93,13 @@ impl ControlFlow for () {
 
 impl<B> ControlFlow for Control<B> {
     fn continuing() -> Self {
-        Control::Continue
+        Self::Continue
     }
     fn should_break(&self) -> bool {
-        if let Control::Break(_) = *self {
-            true
-        } else {
-            false
-        }
+        matches!(self, Self::Break(_))
     }
     fn should_prune(&self) -> bool {
-        match *self {
-            Control::Prune => true,
-            Control::Continue | Control::Break(_) => false,
-        }
+        matches!(self, Self::Prune)
     }
 }
 
@@ -133,7 +126,7 @@ impl<C: ControlFlow, E> ControlFlow for Result<C, E> {
 /// The default is `Continue`.
 impl<B> Default for Control<B> {
     fn default() -> Self {
-        Control::Continue
+        Self::Continue
     }
 }
 

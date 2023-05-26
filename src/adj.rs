@@ -164,13 +164,13 @@ where
 
 impl<E, Ix: IndexType> List<E, Ix> {
     /// Creates a new, empty adjacency list.
-    pub fn new() -> List<E, Ix> {
-        List { suc: vec![] }
+    pub fn new() -> Self {
+        Self { suc: vec![] }
     }
 
     /// Creates a new, empty adjacency list tailored for `nodes` nodes.
-    pub fn with_capacity(nodes: usize) -> List<E, Ix> {
-        List {
+    pub fn with_capacity(nodes: usize) -> Self {
+        Self {
             suc: Vec::with_capacity(nodes),
         }
     }
