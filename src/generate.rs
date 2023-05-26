@@ -42,11 +42,11 @@ impl Generator<Directed> {
         assert!(nodes != 0);
         let nedges = (nodes - 1) * nodes / 2;
         assert!(nedges < 64);
-        Generator {
+        Self {
             acyclic: true,
             selfloops: false,
-            nodes: nodes,
-            nedges: nedges,
+            nodes,
+            nedges,
             bits: !0,
             g: Graph::with_capacity(nodes, nedges),
         }
@@ -68,11 +68,11 @@ impl<Ty: EdgeType> Generator<Ty> {
             (nodes * nodes) / scale - nodes
         };
         assert!(nedges < 64);
-        Generator {
+        Self {
             acyclic: false,
             selfloops: allow_selfloops,
-            nodes: nodes,
-            nedges: nedges,
+            nodes,
+            nedges,
             bits: !0,
             g: Graph::with_capacity(nodes, nedges),
         }

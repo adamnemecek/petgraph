@@ -327,7 +327,7 @@ where
         }
 
         let mut gr = Graph {
-            nodes: nodes,
+            nodes,
             edges: edges,
             ty: ty,
         };

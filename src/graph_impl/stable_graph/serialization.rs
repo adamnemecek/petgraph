@@ -231,7 +231,7 @@ where
         let node_bound = nodes.len();
         let mut sgr = StableGraph {
             g: Graph {
-                nodes: nodes,
+                nodes,
                 edges: edges,
                 ty: ty,
             },
