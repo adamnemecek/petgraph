@@ -26,18 +26,6 @@ pub struct UnionFind<K> {
     rank: Vec<u8>,
 }
 
-#[inline]
-unsafe fn get_unchecked<K>(xs: &[K], index: usize) -> &K {
-    debug_assert!(index < xs.len());
-    xs.get_unchecked(index)
-}
-
-#[inline]
-unsafe fn get_unchecked_mut<K>(xs: &mut [K], index: usize) -> &mut K {
-    debug_assert!(index < xs.len());
-    xs.get_unchecked_mut(index)
-}
-
 impl<K> UnionFind<K>
 where
     K: IndexType,
@@ -45,9 +33,9 @@ where
     /// Create a new `UnionFind` of `n` disjoint sets.
     pub fn new(n: usize) -> Self {
         let rank = vec![0; n];
-        let parent = (0..n).map(K::new).collect::<Vec<K>>();
+        let parent: Vec<_> = (0..n).map(K::new).collect();
 
-        UnionFind { parent, rank }
+        Self { parent, rank }
     }
 
     /// Return the representative for `x`.
@@ -55,18 +43,29 @@ where
     /// **Panics** if `x` is out of bounds.
     pub fn find(&self, x: K) -> K {
         assert!(x.index() < self.parent.len());
-        unsafe {
-            let mut x = x;
-            loop {
-                // Use unchecked indexing because we can trust the internal set ids.
-                let xparent = *get_unchecked(&self.parent, x.index());
-                if xparent == x {
-                    break;
-                }
-                x = xparent;
+
+        let mut x = x;
+        loop {
+            // Use unchecked indexing because we can trust the internal set ids.
+            let xparent = self.get_unchecked(x.index());
+            if xparent == x {
+                break;
             }
-            x
+            x = xparent;
         }
+        x
+    }
+
+    #[inline]
+    fn get_unchecked(&self, index: usize) -> K {
+        debug_assert!(index < self.parent.len());
+        unsafe { *self.parent.get_unchecked(index) }
+    }
+
+    #[inline]
+    fn get_unchecked_mut(&mut self, index: usize) -> &mut K {
+        debug_assert!(index < self.parent.len());
+        unsafe { self.parent.get_unchecked_mut(index) }
     }
 
     /// Return the representative for `x`.
@@ -77,14 +76,14 @@ where
     /// **Panics** if `x` is out of bounds.
     pub fn find_mut(&mut self, x: K) -> K {
         assert!(x.index() < self.parent.len());
-        unsafe { self.find_mut_recursive(x) }
+        self.find_mut_recursive(x)
     }
 
-    unsafe fn find_mut_recursive(&mut self, mut x: K) -> K {
-        let mut parent = *get_unchecked(&self.parent, x.index());
+    fn find_mut_recursive(&mut self, mut x: K) -> K {
+        let mut parent = self.get_unchecked(x.index());
         while parent != x {
-            let grandparent = *get_unchecked(&self.parent, parent.index());
-            *get_unchecked_mut(&mut self.parent, x.index()) = grandparent;
+            let grandparent = self.get_unchecked(parent.index());
+            *self.get_unchecked_mut(x.index()) = grandparent;
             x = parent;
             parent = grandparent;
         }
@@ -134,12 +133,10 @@ where
     /// Return a vector mapping each element to its representative.
     pub fn into_labeling(mut self) -> Vec<K> {
         // write in the labeling of each element
-        unsafe {
-            for ix in 0..self.parent.len() {
-                let k = *get_unchecked(&self.parent, ix);
-                let xrep = self.find_mut_recursive(k);
-                *self.parent.get_unchecked_mut(ix) = xrep;
-            }
+        for ix in 0..self.parent.len() {
+            let k = self.get_unchecked(ix);
+            let xrep = self.find_mut_recursive(k);
+            *self.get_unchecked_mut(ix) = xrep;
         }
         self.parent
     }
