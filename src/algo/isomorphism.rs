@@ -48,7 +48,7 @@ mod state {
     {
         pub fn new(g: &'a G) -> Self {
             let c0 = g.node_count();
-            Vf2State {
+            Self {
                 graph: g,
                 mapping: vec![std::usize::MAX; c0],
                 out: vec![0; c0],

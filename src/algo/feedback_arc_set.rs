@@ -351,7 +351,7 @@ mod linked_list {
 
     impl<Data, Ix> LinkedListEntry<Data, Ix> {
         pub fn new(data: Data) -> Self {
-            LinkedListEntry { pos: None, data }
+            Self { pos: None, data }
         }
 
         pub fn data(&mut self) -> &mut Data {
@@ -375,7 +375,7 @@ mod linked_list {
         Ix: PartialEq + Copy,
     {
         pub fn new() -> Self {
-            LinkedList {
+            Self {
                 start: None,
                 marker: PhantomData,
             }

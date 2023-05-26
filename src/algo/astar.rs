@@ -152,8 +152,8 @@ where
     G: GraphBase,
     G::NodeId: Eq + Hash,
 {
-    fn new() -> PathTracker<G> {
-        PathTracker {
+    fn new() -> Self {
+        Self {
             came_from: HashMap::new(),
         }
     }

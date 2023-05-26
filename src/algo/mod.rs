@@ -223,7 +223,7 @@ where
     where
         G: GraphRef + Visitable<NodeId = N, Map = VM>,
     {
-        DfsSpace { dfs: Dfs::empty(g) }
+        Self { dfs: Dfs::empty(g) }
     }
 }
 
@@ -232,7 +232,7 @@ where
     VM: VisitMap<N> + Default,
 {
     fn default() -> Self {
-        DfsSpace {
+        Self {
             dfs: Dfs {
                 stack: <_>::default(),
                 discovered: <_>::default(),
@@ -365,7 +365,7 @@ impl<N> Default for TarjanScc<N> {
 impl<N> TarjanScc<N> {
     /// Creates a new `TarjanScc`
     pub fn new() -> Self {
-        TarjanScc {
+        Self {
             index: 1,                        // Invariant: index < componentcount at all times.
             componentcount: std::usize::MAX, // Will hold if componentcount is initialized to number of nodes - 1 or higher.
             nodes: vec![],

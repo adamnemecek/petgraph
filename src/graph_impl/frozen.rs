@@ -15,7 +15,7 @@ use crate::{Direction, EdgeType};
 impl<'a, G> Frozen<'a, G> {
     /// Create a new `Frozen` from a mutable reference to a graph.
     pub fn new(gr: &'a mut G) -> Self {
-        Frozen(gr)
+        Self(gr)
     }
 }
 

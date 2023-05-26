@@ -33,8 +33,8 @@ where
     F: Fn(T) -> Result<R, &'static str>,
 {
     pub fn new(f: F) -> Self {
-        MappedSequenceVisitor {
-            f: f,
+        Self {
+            f,
             marker: PhantomData,
         }
     }

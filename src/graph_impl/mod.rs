@@ -104,7 +104,7 @@ pub struct NodeIndex<Ix = DefaultIx>(Ix);
 impl<Ix: IndexType> NodeIndex<Ix> {
     #[inline]
     pub fn new(x: usize) -> Self {
-        NodeIndex(IndexType::new(x))
+        Self(IndexType::new(x))
     }
 
     #[inline]
@@ -114,7 +114,7 @@ impl<Ix: IndexType> NodeIndex<Ix> {
 
     #[inline]
     pub fn end() -> Self {
-        NodeIndex(IndexType::max())
+        Self(IndexType::max())
     }
 
     fn _into_edge(self) -> EdgeIndex<Ix> {
@@ -127,16 +127,16 @@ unsafe impl<Ix: IndexType> IndexType for NodeIndex<Ix> {
         self.0.index()
     }
     fn new(x: usize) -> Self {
-        NodeIndex::new(x)
+        Self::new(x)
     }
     fn max() -> Self {
-        NodeIndex(<Ix as IndexType>::max())
+        Self(<Ix as IndexType>::max())
     }
 }
 
 impl<Ix: IndexType> From<Ix> for NodeIndex<Ix> {
     fn from(ix: Ix) -> Self {
-        NodeIndex(ix)
+        Self(ix)
     }
 }
 
@@ -163,7 +163,7 @@ pub struct EdgeIndex<Ix = DefaultIx>(Ix);
 impl<Ix: IndexType> EdgeIndex<Ix> {
     #[inline]
     pub fn new(x: usize) -> Self {
-        EdgeIndex(IndexType::new(x))
+        Self(IndexType::new(x))
     }
 
     #[inline]
@@ -175,7 +175,7 @@ impl<Ix: IndexType> EdgeIndex<Ix> {
     /// to end an adjacency list.
     #[inline]
     pub fn end() -> Self {
-        EdgeIndex(IndexType::max())
+        Self(IndexType::max())
     }
 
     fn _into_node(self) -> NodeIndex<Ix> {

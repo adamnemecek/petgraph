@@ -89,7 +89,7 @@ pub struct NotZero<T>(T);
 
 impl<T: Zero> Default for NotZero<T> {
     fn default() -> Self {
-        NotZero(T::zero())
+        Self(T::zero())
     }
 }
 
@@ -100,7 +100,7 @@ impl<T: Zero> Nullable for NotZero<T> {
     #[doc(hidden)]
     fn new(value: T) -> Self {
         assert!(!value.is_zero());
-        NotZero(value)
+        Self(value)
     }
 
     // implemented here for optimization purposes
@@ -1027,7 +1027,7 @@ impl<N, E> MatrixGraph<N, E, Directed> {
     /// This is a convenience method. Use `MatrixGraph::with_capacity` or `MatrixGraph::default` for
     /// a constructor that is generic in all the type parameters of `MatrixGraph`.
     pub fn new() -> Self {
-        MatrixGraph::default()
+        Self::default()
     }
 }
 
@@ -1037,7 +1037,7 @@ impl<N, E> MatrixGraph<N, E, Undirected> {
     /// This is a convenience method. Use `MatrixGraph::with_capacity` or `MatrixGraph::default` for
     /// a constructor that is generic in all the type parameters of `MatrixGraph`.
     pub fn new_undirected() -> Self {
-        MatrixGraph::default()
+        Self::default()
     }
 }
 
@@ -1069,7 +1069,7 @@ impl<N, E, Ty: EdgeType, Null: Nullable<Wrapped = E>, Ix: IndexType> NodeCount
     for MatrixGraph<N, E, Ty, Null, Ix>
 {
     fn node_count(&self) -> usize {
-        MatrixGraph::node_count(self)
+        Self::node_count(self)
     }
 }
 
@@ -1118,7 +1118,7 @@ impl<N, E, Ty: EdgeType, Null: Nullable<Wrapped = E>, Ix: IndexType> GetAdjacenc
     fn adjacency_matrix(&self) -> Self::AdjMatrix {}
 
     fn is_adjacent(&self, _: &Self::AdjMatrix, a: NodeIndex<Ix>, b: NodeIndex<Ix>) -> bool {
-        MatrixGraph::has_edge(self, a, b)
+        Self::has_edge(self, a, b)
     }
 }
 
@@ -1256,7 +1256,7 @@ impl<N, E, Ty: EdgeType, Null: Nullable<Wrapped = E>, Ix: IndexType> Build
         weight: Self::EdgeWeight,
     ) -> Option<Self::EdgeId> {
         if !self.has_edge(a, b) {
-            MatrixGraph::update_edge(self, a, b, weight);
+            Self::update_edge(self, a, b, weight);
             Some((a, b))
         } else {
             None
@@ -1269,7 +1269,7 @@ impl<N, E, Ty: EdgeType, Null: Nullable<Wrapped = E>, Ix: IndexType> Build
         b: Self::NodeId,
         weight: Self::EdgeWeight,
     ) -> Self::EdgeId {
-        MatrixGraph::update_edge(self, a, b, weight);
+        Self::update_edge(self, a, b, weight);
         (a, b)
     }
 }
