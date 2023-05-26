@@ -84,10 +84,10 @@ enum CompactDirection {
 impl CompactDirection {
     /// Return the opposite `CompactDirection`.
     #[inline]
-    pub fn opposite(self) -> CompactDirection {
+    pub fn opposite(self) -> Self {
         match self {
-            CompactDirection::Outgoing => CompactDirection::Incoming,
-            CompactDirection::Incoming => CompactDirection::Outgoing,
+            Self::Outgoing => Self::Incoming,
+            Self::Incoming => Self::Outgoing,
         }
     }
 }
@@ -95,8 +95,8 @@ impl CompactDirection {
 impl From<Direction> for CompactDirection {
     fn from(d: Direction) -> Self {
         match d {
-            Outgoing => CompactDirection::Outgoing,
-            Incoming => CompactDirection::Incoming,
+            Outgoing => Self::Outgoing,
+            Incoming => Self::Incoming,
         }
     }
 }
@@ -157,7 +157,7 @@ where
         D: serde::Deserializer<'de>,
     {
         let equivalent_graph: Graph<N, E, Ty, u32> = Graph::deserialize(deserializer)?;
-        Ok(GraphMap::from_graph(equivalent_graph))
+        Ok(Self::from_graph(equivalent_graph))
     }
 }
 
@@ -173,7 +173,7 @@ where
 
     /// Create a new `GraphMap` with estimated capacity.
     pub fn with_capacity(nodes: usize, edges: usize) -> Self {
-        GraphMap {
+        Self {
             nodes: IndexMap::with_capacity(nodes),
             edges: IndexMap::with_capacity(edges),
             ty: PhantomData,
