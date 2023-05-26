@@ -703,7 +703,7 @@ fn full_topo_generic() {
             index += 1;
         }
 
-        let mut order = Vec::new();
+        let mut order = vec![];
         index = 0;
         let mut topo = Topo::new(&gr);
         while let Some(nx) = topo.next(&gr) {
@@ -1085,7 +1085,7 @@ fn naive_closure<G>(g: G) -> Vec<(G::NodeId, G::NodeId)>
 where
     G: Visitable + IntoNodeIdentifiers + IntoNeighbors,
 {
-    let mut res = Vec::new();
+    let mut res = vec![];
     naive_closure_foreach(g, |a, b| res.push((a, b)));
     res
 }
@@ -1221,7 +1221,7 @@ fn is_maximum_matching<G: NodeIndexable + IntoEdges + IntoNodeIdentifiers + Visi
     // path was found.
     for unmatched in g.node_identifiers().filter(|u| !m.contains_node(*u)) {
         let visited = &mut g.visit_map();
-        let mut stack = Vec::new();
+        let mut stack = vec![];
 
         stack.push((unmatched, false));
         while let Some((u, do_matched_edges)) = stack.pop() {

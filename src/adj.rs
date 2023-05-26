@@ -165,7 +165,7 @@ where
 impl<E, Ix: IndexType> List<E, Ix> {
     /// Creates a new, empty adjacency list.
     pub fn new() -> List<E, Ix> {
-        List { suc: Vec::new() }
+        List { suc: vec![] }
     }
 
     /// Creates a new, empty adjacency list tailored for `nodes` nodes.
@@ -191,7 +191,7 @@ impl<E, Ix: IndexType> List<E, Ix> {
     /// run in amortized **O(1)** time.
     pub fn add_node(&mut self) -> NodeIndex<Ix> {
         let i = self.suc.len();
-        self.suc.push(Vec::new());
+        self.suc.push(vec![]);
         Ix::new(i)
     }
 

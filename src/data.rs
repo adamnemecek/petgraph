@@ -277,7 +277,7 @@ pub trait FromElements: Create {
     {
         let mut gr = Self::with_capacity(0, 0);
         // usize -> NodeId map
-        let mut map = Vec::new();
+        let mut map = vec![];
         for element in iterable {
             match element {
                 Element::Node { weight } => {
@@ -385,7 +385,7 @@ pub trait ElementIterator<N, E>: Iterator<Item = Element<N, E>> {
         FilterElements {
             iter: self,
             node_index: 0,
-            map: Vec::new(),
+            map: vec![],
             f,
         }
     }

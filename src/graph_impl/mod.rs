@@ -457,8 +457,8 @@ impl<N, E> Graph<N, E, Directed> {
     /// a constructor that is generic in all the type parameters of `Graph`.
     pub fn new() -> Self {
         Graph {
-            nodes: Vec::new(),
-            edges: Vec::new(),
+            nodes: vec![],
+            edges: vec![],
             ty: PhantomData,
         }
     }
@@ -471,8 +471,8 @@ impl<N, E> Graph<N, E, Undirected> {
     /// a constructor that is generic in all the type parameters of `Graph`.
     pub fn new_undirected() -> Self {
         Graph {
-            nodes: Vec::new(),
-            edges: Vec::new(),
+            nodes: vec![],
+            edges: vec![],
             ty: PhantomData,
         }
     }

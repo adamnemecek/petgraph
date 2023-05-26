@@ -79,12 +79,12 @@ where
 fn good_node_sequence(
     edge_refs: impl Iterator<Item = (NodeIndex<usize>, NodeIndex<usize>)>,
 ) -> HashMap<usize, usize> {
-    let mut nodes = FasNodeContainer { nodes: Vec::new() };
+    let mut nodes = FasNodeContainer { nodes: vec![] };
     let mut buckets = Buckets {
         sinks_or_isolated: NodeLinkedList::new(),
         sources: NodeLinkedList::new(),
-        bidirectional_pve_dd: Vec::new(),
-        bidirectional_nve_dd: Vec::new(),
+        bidirectional_pve_dd: vec![],
+        bidirectional_nve_dd: vec![],
     };
     // Lookup of node indices from input graph to indices into `nodes`
     let mut graph_ix_lookup = HashMap::new();
@@ -99,8 +99,8 @@ fn good_node_sequence(
 
                     nodes.nodes.push(LinkedListEntry::new(FasNode {
                         graph_ix: g_ix,
-                        out_edges: Vec::new(),
-                        in_edges: Vec::new(),
+                        out_edges: vec![],
+                        in_edges: vec![],
                         out_degree: 0,
                         in_degree: 0,
                     }));
@@ -433,7 +433,7 @@ mod linked_list {
 
         /// For debug purposes
         fn to_vec(&self, container: &mut Container) -> Vec<Ix> {
-            let mut ixs = Vec::new();
+            let mut ixs = vec![];
 
             let mut node_ix = self.start;
 

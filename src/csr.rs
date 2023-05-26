@@ -118,8 +118,8 @@ where
         N: Default,
     {
         Csr {
-            column: Vec::new(),
-            edges: Vec::new(),
+            column: vec![],
+            edges: vec![],
             row: vec![0; n + 1],
             node_weights: (0..n).map(|_| N::default()).collect(),
             edge_count: 0,
@@ -1077,7 +1077,7 @@ mod tests {
             (7, 8, 3.),
         ])
         .unwrap();
-        let mut copy = Vec::new();
+        let mut copy = vec![];
         for e in m.edge_references() {
             copy.push((e.source(), e.target(), *e.weight()));
             println!("{:?}", e);

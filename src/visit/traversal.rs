@@ -47,7 +47,7 @@ where
 {
     fn default() -> Self {
         Dfs {
-            stack: Vec::new(),
+            stack: vec![],
             discovered: VM::default(),
         }
     }
@@ -89,7 +89,7 @@ where
         G: GraphRef + Visitable<NodeId = N, Map = VM>,
     {
         Dfs {
-            stack: Vec::new(),
+            stack: vec![],
             discovered: graph.visit_map(),
         }
     }
@@ -143,7 +143,7 @@ where
 {
     fn default() -> Self {
         DfsPostOrder {
-            stack: Vec::new(),
+            stack: vec![],
             discovered: VM::default(),
             finished: VM::default(),
         }
@@ -172,7 +172,7 @@ where
         G: GraphRef + Visitable<NodeId = N, Map = VM>,
     {
         DfsPostOrder {
-            stack: Vec::new(),
+            stack: vec![],
             discovered: graph.visit_map(),
             finished: graph.visit_map(),
         }
@@ -322,7 +322,7 @@ where
 {
     fn default() -> Self {
         Topo {
-            tovisit: Vec::new(),
+            tovisit: vec![],
             ordered: VM::default(),
         }
     }
@@ -364,7 +364,7 @@ where
     {
         Topo {
             ordered: graph.visit_map(),
-            tovisit: Vec::new(),
+            tovisit: vec![],
         }
     }
 

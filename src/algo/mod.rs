@@ -144,7 +144,7 @@ where
         dfs.reset(g);
         let mut finished = g.visit_map();
 
-        let mut finish_stack = Vec::new();
+        let mut finish_stack = vec![];
         for i in g.node_identifiers() {
             if dfs.discovered.is_visited(&i) {
                 continue;
@@ -321,7 +321,7 @@ where
 
     let mut dfs = Dfs::from_parts(dfs.stack, dfs.discovered);
     dfs.reset(g);
-    let mut sccs = Vec::new();
+    let mut sccs = vec![];
 
     // Second phase
     // Process in decreasing finishing time order
@@ -331,7 +331,7 @@ where
         }
         // Move to the leader node `i`.
         dfs.move_to(i);
-        let mut scc = Vec::new();
+        let mut scc = vec![];
         while let Some(nx) = dfs.next(g) {
             scc.push(nx);
         }
@@ -368,8 +368,8 @@ impl<N> TarjanScc<N> {
         TarjanScc {
             index: 1,                        // Invariant: index < componentcount at all times.
             componentcount: std::usize::MAX, // Will hold if componentcount is initialized to number of nodes - 1 or higher.
-            nodes: Vec::new(),
-            stack: Vec::new(),
+            nodes: vec![],
+            stack: vec![],
         }
     }
 
@@ -508,7 +508,7 @@ pub fn tarjan_scc<G>(g: G) -> Vec<Vec<G::NodeId>>
 where
     G: IntoNodeIdentifiers + IntoNeighbors + NodeIndexable,
 {
-    let mut sccs = Vec::new();
+    let mut sccs = vec![];
     {
         let mut tarjan_scc = TarjanScc::new();
         tarjan_scc.run(g, |scc| sccs.push(scc.to_vec()));
@@ -610,7 +610,7 @@ where
     // Build a map from old indices to new ones.
     let mut node_map = vec![NodeIndex::end(); g.node_count()];
     for comp in sccs {
-        let new_nix = condensed.add_node(Vec::new());
+        let new_nix = condensed.add_node(vec![]);
         for nix in comp {
             node_map[nix.index()] = new_nix;
         }

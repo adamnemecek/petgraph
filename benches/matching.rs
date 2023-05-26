@@ -15,7 +15,7 @@ use petgraph::graph::UnGraph;
 fn huge() -> UnGraph<(), ()> {
     static NODE_COUNT: u32 = 1_000;
 
-    let mut edges = Vec::new();
+    let mut edges = vec![];
 
     for i in 0..NODE_COUNT {
         for j in i..NODE_COUNT {

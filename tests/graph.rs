@@ -957,7 +957,7 @@ fn tarjan_scc() {
 
     let mut tarjan_scc = petgraph::algo::TarjanScc::new();
 
-    let mut result = Vec::new();
+    let mut result = vec![];
     tarjan_scc.run(&gr, |scc| result.push(scc.iter().rev().cloned().collect()));
     assert_sccs_eq(
         result,
@@ -976,7 +976,7 @@ fn tarjan_scc() {
     let ed = hr.find_edge(n(6), n(8)).unwrap();
     assert!(hr.remove_edge(ed).is_some());
 
-    let mut result = Vec::new();
+    let mut result = vec![];
     tarjan_scc.run(&hr, |scc| result.push(scc.iter().rev().cloned().collect()));
     assert_sccs_eq(
         result,
@@ -999,7 +999,7 @@ fn tarjan_scc() {
     gr.add_edge(n(2), n(0), ());
     gr.add_edge(n(1), n(0), ());
 
-    let mut result = Vec::new();
+    let mut result = vec![];
     tarjan_scc.run(&gr, |scc| result.push(scc.iter().rev().cloned().collect()));
     assert_sccs_eq(
         result,
@@ -1012,7 +1012,7 @@ fn tarjan_scc() {
     gr.extend_with_edges(&[(0, 0), (1, 0), (2, 0), (2, 1), (2, 2)]);
     gr.add_node(());
     // no order for the disconnected one
-    let mut result = Vec::new();
+    let mut result = vec![];
     tarjan_scc.run(&gr, |scc| result.push(scc.iter().rev().cloned().collect()));
     assert_sccs_eq(
         result,
@@ -1525,7 +1525,7 @@ fn toposort_generic() {
         index += 1.;
     }
 
-    let mut order = Vec::new();
+    let mut order = vec![];
     index = 0.;
     let mut topo = Topo::new(&gr);
     while let Some(nx) = topo.next(&gr) {
@@ -1743,7 +1743,7 @@ fn neighbors_selfloops() {
     seen_out.sort();
     assert_eq!(&seen_out, &out_edges);
 
-    let mut seen_walk = Vec::new();
+    let mut seen_walk = vec![];
     let mut walk = gr.neighbors(a).detach();
     while let Some(n) = walk.next_node(&gr) {
         seen_walk.push(n);
@@ -1917,7 +1917,7 @@ fn filtered() {
     let filt = NodeFiltered(&g, |n: NodeIndex| n != c && n != e);
 
     let mut dfs = DfsPostOrder::new(&filt, a);
-    let mut po = Vec::new();
+    let mut po = vec![];
     while let Some(nx) = dfs.next(&filt) {
         println!("Next: {:?}", nx);
         po.push(nx);
@@ -1939,7 +1939,7 @@ fn filtered_edge_reverse() {
     let a = g.add_node("A");
     g.add_edge(a, a, E::A);
     let ef_a = EdgeFiltered::from_fn(&g, |edge| *edge.weight() == E::A);
-    let mut po = Vec::new();
+    let mut po = vec![];
     let mut dfs = Dfs::new(&ef_a, a);
     while let Some(next_n_ix) = dfs.next(&ef_a) {
         po.push(next_n_ix);
@@ -1947,7 +1947,7 @@ fn filtered_edge_reverse() {
     assert_eq!(set(po), set(vec![a]));
 
     // Check in reverse
-    let mut po = Vec::new();
+    let mut po = vec![];
     let mut dfs = Dfs::new(&Reversed(&ef_a), a);
     while let Some(next_n_ix) = dfs.next(&Reversed(&ef_a)) {
         po.push(next_n_ix);
@@ -1978,7 +1978,7 @@ fn filtered_edge_reverse() {
     let ef_b = EdgeFiltered::from_fn(&g, |edge| *edge.weight() == E::B);
 
     // DFS down from a, filtered by E::A.
-    let mut po = Vec::new();
+    let mut po = vec![];
     let mut dfs = Dfs::new(&ef_a, a);
     while let Some(next_n_ix) = dfs.next(&ef_a) {
         po.push(next_n_ix);
@@ -1987,7 +1987,7 @@ fn filtered_edge_reverse() {
 
     // Reversed DFS from f, filtered by E::A.
     let mut dfs = Dfs::new(&Reversed(&ef_a), f);
-    let mut po = Vec::new();
+    let mut po = vec![];
     while let Some(next_n_ix) = dfs.next(&Reversed(&ef_a)) {
         po.push(next_n_ix);
     }
@@ -1995,7 +1995,7 @@ fn filtered_edge_reverse() {
 
     // Reversed DFS from j, filtered by E::A.
     let mut dfs = Dfs::new(&Reversed(&ef_a), j);
-    let mut po = Vec::new();
+    let mut po = vec![];
     while let Some(next_n_ix) = dfs.next(&Reversed(&ef_a)) {
         po.push(next_n_ix);
     }
@@ -2003,7 +2003,7 @@ fn filtered_edge_reverse() {
 
     // Reversed DFS from c, filtered by E::A.
     let mut dfs = Dfs::new(&Reversed(&ef_a), c);
-    let mut po = Vec::new();
+    let mut po = vec![];
     while let Some(next_n_ix) = dfs.next(&Reversed(&ef_a)) {
         po.push(next_n_ix);
     }
@@ -2011,7 +2011,7 @@ fn filtered_edge_reverse() {
 
     // Reversed DFS from c, filtered by E::B.
     let mut dfs = Dfs::new(&Reversed(&ef_b), c);
-    let mut po = Vec::new();
+    let mut po = vec![];
     while let Some(next_n_ix) = dfs.next(&Reversed(&ef_b)) {
         po.push(next_n_ix);
     }
@@ -2019,7 +2019,7 @@ fn filtered_edge_reverse() {
 
     // Reversed DFS from d, filtered by E::B.
     let mut dfs = Dfs::new(&Reversed(&ef_b), d);
-    let mut po = Vec::new();
+    let mut po = vec![];
     while let Some(next_n_ix) = dfs.next(&Reversed(&ef_b)) {
         po.push(next_n_ix);
     }
@@ -2049,14 +2049,14 @@ fn filtered_edge_reverse() {
 
     let ef_a = EdgeFiltered::from_fn(&g, |edge| *edge.weight() == E::A);
     let ef_b = EdgeFiltered::from_fn(&g, |edge| *edge.weight() == E::B);
-    let mut po = Vec::new();
+    let mut po = vec![];
     let mut dfs = Dfs::new(&Reversed(&ef_b), d);
     while let Some(next_n_ix) = dfs.next(&Reversed(&ef_b)) {
         po.push(next_n_ix);
     }
     assert_eq!(set(po), set(vec![c, d]));
 
-    let mut po = Vec::new();
+    let mut po = vec![];
     let mut dfs = Dfs::new(&Reversed(&ef_a), h);
     while let Some(next_n_ix) = dfs.next(&Reversed(&ef_a)) {
         po.push(next_n_ix);
@@ -2179,7 +2179,7 @@ fn filtered_post_order() {
 
     let map = dfs.discovered;
     gr.add_edge(n(0), n(1), ());
-    let mut po = Vec::new();
+    let mut po = vec![];
     let mut dfs = DfsPostOrder::new(&gr, n(0));
     let f = NodeFiltered(&gr, map);
     while let Some(n) = dfs.next(&f) {

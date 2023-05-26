@@ -215,7 +215,7 @@ fn test_edge_iterators_directed() {
             );
         }
     }
-    let mut incoming = vec![Vec::new(); gr.node_bound()];
+    let mut incoming = vec![vec![]; gr.node_bound()];
 
     for i in gr.node_indices() {
         for j in gr.neighbors(i) {
@@ -448,7 +448,7 @@ use petgraph::stable_graph::StableGraph;
 #[test]
 fn from_min_spanning_tree() {
     let mut g = StableGraph::new();
-    let mut nodes = Vec::new();
+    let mut nodes = vec![];
     for _ in 0..6 {
         nodes.push(g.add_node(()));
     }
