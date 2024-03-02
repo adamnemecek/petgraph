@@ -107,6 +107,7 @@ impl<C: ControlFlow, E> ControlFlow for Result<C, E> {
     fn continuing() -> Self {
         Ok(C::continuing())
     }
+
     fn should_break(&self) -> bool {
         if let Ok(ref c) = *self {
             c.should_break()
@@ -114,6 +115,7 @@ impl<C: ControlFlow, E> ControlFlow for Result<C, E> {
             true
         }
     }
+
     fn should_prune(&self) -> bool {
         if let Ok(ref c) = *self {
             c.should_prune()

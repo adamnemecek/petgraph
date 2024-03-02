@@ -183,7 +183,7 @@ where
 {
     /// Create a new `StableGraph` with estimated capacity.
     pub fn with_capacity(nodes: usize, edges: usize) -> Self {
-        StableGraph {
+        Self {
             g: Graph::with_capacity(nodes, edges),
             node_count: 0,
             edge_count: 0,

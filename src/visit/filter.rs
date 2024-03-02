@@ -78,7 +78,7 @@ where
 {
     /// Create an `NodeFiltered` adaptor from the closure `filter`.
     pub fn from_fn(graph: G, filter: F) -> Self {
-        NodeFiltered(graph, filter)
+        Self(graph, filter)
     }
 }
 
@@ -121,10 +121,10 @@ where
 {
     type Item = I::Item;
     fn next(&mut self) -> Option<Self::Item> {
-        let f = self.f;
         if !self.include_source {
             None
         } else {
+            let f = self.f;
             self.iter.find(move |&target| f.include_node(target))
         }
     }
@@ -196,10 +196,10 @@ where
 {
     type Item = I::Item;
     fn next(&mut self) -> Option<Self::Item> {
-        let f = self.f;
         if !self.include_source {
             None
         } else {
+            let f = self.f;
             self.iter.find(move |&target| f.include_node(target.id()))
         }
     }
